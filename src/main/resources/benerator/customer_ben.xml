@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup defaultEncoding="UTF-8" defaultPageSize="100"
+   defaultDataset="US" xmlns="http://databene.org/benerator/0.7.6"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://databene.org/benerator/0.7.6 http://databene.org/benerator-0.7.6.xsd">
+
+   <import platforms="csv,db" />
+   <!-- <database id="db" url="jdbc:h2:target/demo;AUTO_SERVER=TRUE" -->
+   <!-- driver="org.h2.Driver" batch="true" catalog="DEMO" /> -->
+   <database id="db" environment="benerator/oracle" />
+
+   <import domains="person, address, email" />
+
+   <echo>-= Create Customers =-</echo>
+   <!-- <bean id="seq_gen" class="DBSeqHiLoGenerator"> -->
+   <!-- <property name="name" value="HIBERNATE_SEQUENCE"/> -->
+   <!-- <property name="maxLo" value="100"/> -->
+   <!-- <property name="source" ref="db"/> -->
+   <!-- </bean> -->
+   <generate type="Customer" consumer="db" count="5000">
+      <variable name="person" generator="PersonGenerator" />
+      <id name="id" type="long"
+         generator="new org.databene.platform.db.DBSeqHiLoGenerator('HIBERNATE_SEQUENCE', 1000, db)" />
+      <attribute name="firstName" type="string" script="person.givenName" />
+      <attribute name="lastName" type="string" script="person.familyName" />
+      <generate type="Contact" consumer="db" count="1">
+         <id name="id" type="long"
+            generator="new org.databene.platform.db.DBSeqHiLoGenerator('HIBERNATE_SEQUENCE', 1000, db)" />
+         <attribute name="type" type="int" constant="0"/>   
+         <attribute name="setting" type="string"
+            script="{person.givenName+'.'+person.familyName+'@gmail.com'}" />
+         <reference name="customer_id" targetType="Customer"
+            source="db" distribution="random" />
+      </generate>
+   </generate>
+
+   <generate type="Address" consumer="db" count="10000">
+      <id name="id" type="long"
+         generator="new org.databene.platform.db.DBSeqHiLoGenerator('HIBERNATE_SEQUENCE', 1000, db)" />
+      <variable name="address" generator="AddressGenerator" />
+      <attribute name="street" type="string" script="address.street" />
+      <attribute name="city" type="string" script="address.city" />
+      <reference name="customer_id" targetType="Customer"
+         source="db" distribution="random" />
+   </generate>
+</setup>

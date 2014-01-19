@@ -17,14 +17,14 @@ import demo.jpa.entities.Address;
 import demo.jpa.entities.Contact;
 import demo.jpa.entities.Customer;
 
-//@ContextConfiguration(loader=AnnotationConfigContextLoader.class, classes=RepositoryConfig.class)
-@ContextConfiguration(locations="classpath:META-INF/jpa.spring.xml")
+@ContextConfiguration(locations="classpath:test.spring.xml")
+//@ContextConfiguration(locations="classpath:META-INF/jpa.spring.xml")
 @TransactionConfiguration
 @Test(groups="xmlConfig")
-public class CustomerSelectTest extends AbstractTransactionalTestNGSpringContextTests
+public class AnotherCustomerSelectTest extends AbstractTransactionalTestNGSpringContextTests
 {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerSelectTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnotherCustomerSelectTest.class);
     @Autowired
     private CustomerRepository target;
     

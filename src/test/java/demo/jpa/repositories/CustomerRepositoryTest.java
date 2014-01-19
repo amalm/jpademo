@@ -19,8 +19,9 @@ import demo.jpa.entities.Contact;
 import demo.jpa.entities.Contact.ContactType;
 import demo.jpa.entities.Customer;
 
-@ContextConfiguration(loader=AnnotationConfigContextLoader.class, classes=RepositoryConfig.class)
+@ContextConfiguration(loader=AnnotationConfigContextLoader.class, classes=H2RepositoryConfig.class)
 @TransactionConfiguration(defaultRollback=false)
+@Test(groups="javaConfig")
 public class CustomerRepositoryTest extends AbstractTransactionalTestNGSpringContextTests
 {
     @Autowired

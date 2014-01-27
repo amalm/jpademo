@@ -17,8 +17,8 @@ import demo.jpa.entities.Address;
 import demo.jpa.entities.Contact;
 import demo.jpa.entities.Customer;
 
-@ContextConfiguration(locations="classpath:test.spring.xml")
-//@ContextConfiguration(locations="classpath:META-INF/jpa.spring.xml")
+//@ContextConfiguration(locations="classpath:test.spring.xml")
+@ContextConfiguration(locations="classpath:META-INF/jpa.spring.xml")
 @TransactionConfiguration
 @Test(groups="xmlConfig")
 public class AnotherCustomerSelectTest extends AbstractTransactionalTestNGSpringContextTests
